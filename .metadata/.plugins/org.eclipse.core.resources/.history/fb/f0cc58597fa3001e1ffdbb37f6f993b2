@@ -1,0 +1,60 @@
+package mes.master.biz;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.jdom.Document;
+
+import kr.co.mesframe.esb.ObjectExecuteService;
+import kr.co.mesframe.orm.sql.constant.SqlConstant;
+import kr.co.mesframe.txninfo.TxnInfo;
+import kr.co.mesframe.util.DateUtil;
+import mes.event.MessageParse;
+import mes.master.data.DY_PROCWORKORDER;
+import mes.util.EventInfoUtil;
+
+/**
+ * @author LSMESSolution
+ * 
+ * @since 2023.12.07
+ * 
+ * @see
+ */
+public class TxnProcWorkOrderUpdate implements ObjectExecuteService {
+
+	/**
+	 * 생산계획 Edit input 
+	 * 
+	 * @param recvDoc
+	 * @return Object
+	 * 
+	 */
+	@Override
+	public Object execute(Document recvDoc) {
+		List<HashMap<String, String>> masterData = MessageParse.getDefaultXmlParse(recvDoc);
+		TxnInfo txnInfo = EventInfoUtil.setTxnInfo(recvDoc);
+
+		for (int i = 0; i < masterData.size(); i++) {
+			HashMap<String, String> dataMap = (HashMap<String, String>) masterData.get(i);
+			txnInfo.setEventTimeKey(DateUtil.getCurrentEventTimeKey());
+
+			// TODO_전진 히스토리저장 
+
+			DY_PROCWORKORDER procworkorder = new DY_PROCWORKORDER();
+			procworkorder.setKeyPLANTID(dataMap.get("PLANTID"));
+			procworkorder.setKeyDATAKEY(dataMap.get("DATAKEY"));
+
+			procworkorder.setISSUE(dataMap.get("ISSUE")); // ISSUE
+			procworkorder.setTUBEREMARK(dataMap.get("TUBEREMARK")); // Tube 비고
+			procworkorder.setPARTSGRREMARK(dataMap.get("PARTSGRREMARK")); // Parts Gr 비고
+			procworkorder.setPARTSREMARK(dataMap.get("PARTSREMARK")); //부품기타
+			
+
+			procworkorder.excuteDML(SqlConstant.DML_UPDATE);
+
+		}
+		
+		return recvDoc;
+
+	}
+}

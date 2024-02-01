@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.core.circularClasspath=warning
+org.eclipse.jdt.core.classpath.mainOnlyProjectHasTestOnlyDependency=ignore
+org.eclipse.jdt.core.classpathVariable.ECLIPSE_HOME=D\:/git/dy/messerver/kr.co.mesframe.targetplatform/SpringDM
+org.eclipse.jdt.core.classpathVariable.JRE_LIB=C\:/Program Files/Java/jdk8/jre/lib/rt.jar
+org.eclipse.jdt.core.classpathVariable.JRE_SRC=C\:/Program Files/Java/jdk8/src.zip
+org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
+org.eclipse.jdt.core.classpathVariable.JUNIT_HOME=C\:/Users/\uC815\uB3D9\uAE38 \uBE14\uB8E8\uC719\uC988/Desktop/eclipse-committers-2023-12-R-win32-x86_64/eclipse/plugins/org.junit_4.13.2.v20230809-1000.jar
+org.eclipse.jdt.core.classpathVariable.JUNIT_SRC_HOME=C\:/Users/\uC815\uB3D9\uAE38 \uBE14\uB8E8\uC719\uC988/Desktop/eclipse-committers-2023-12-R-win32-x86_64/eclipse/plugins/org.junit.source_4.13.2.v20230809-1000.jar
+org.eclipse.jdt.core.classpathVariable.M2_REPO=C\:/Users/\uC815\uB3D9\uAE38 \uBE14\uB8E8\uC719\uC988/.m2/repository
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.core.compiler.release=disabled

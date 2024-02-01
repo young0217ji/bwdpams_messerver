@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="PlantConstant" class="mes.constant.PlantConstant" />
+	<bean id="MessageAdaptor" class="mes.event.MessageAdaptor" />	
+	<bean id="CustomExceptionMap" class="mes.errorHandler.CustomExceptionMap" depends-on="MessageAdaptor" />
+	<bean id="MessageEventMap" class="mes.event.MessageEventMap" />
+	<bean id="TargetPlantMap" class="mes.event.TargetPlantMap" />
+	
+	<bean id="GenericServiceProxy" class="mes.generic.GenericServiceProxy">
+		<property name="plantConstant" ref="PlantConstant" />
+		<property name="messageAdaptor" ref="MessageAdaptor" />
+		<property name="customExceptionMap" ref="CustomExceptionMap" />
+		<property name="messageEventMap" ref="MessageEventMap" />
+		<property name="targetPlantMap" ref="TargetPlantMap" />
+	</bean>
+</beans>

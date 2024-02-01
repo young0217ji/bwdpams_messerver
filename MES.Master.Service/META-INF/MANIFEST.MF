@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Service
+Bundle-SymbolicName: MES.Master.Service
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Eclipse-RegisterBuddy: MES.Generic.Service, kr.co.mesfactory
+Require-Bundle: kr.co.mesframe;bundle-version="1.0.0",
+ kr.co.mesframe.lib;bundle-version="1.0.0",
+ com.springsource.org.apache.commons.collections;bundle-version="3.2.1",
+ org.eclipse.osgi;bundle-version="3.7.2",
+ org.springframework.core;bundle-version="3.1.1",
+ MES.Generic.Service;bundle-version="1.0.0",
+ kr.co.mesfactory;bundle-version="1.0.0",
+ MES.Legacy.Service;bundle-version="1.0.0",
+ MES.UDF.Service;bundle-version="1.0.0",
+ slf4j.api;bundle-version="1.7.36",
+ org.springframework.security.core;bundle-version="3.1.1"
+Export-Package: mes.master.data,
+ mes.master.user

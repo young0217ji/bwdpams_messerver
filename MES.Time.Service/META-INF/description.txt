@@ -1,0 +1,64 @@
+# Default Properties file for use by StdSchedulerFactory
+# to create a Quartz Scheduler Instance, if a different
+# properties file is not explicitly specified.
+#
+
+org.quartz.scheduler.instanceName = DefaultQuartzScheduler
+org.quartz.scheduler.rmi.export = false
+org.quartz.scheduler.rmi.proxy = false
+org.quartz.scheduler.wrapJobExecutionInUserTransaction = false
+
+org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool
+org.quartz.threadPool.threadCount = 10
+org.quartz.threadPool.threadPriority = 5
+org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread = true
+
+org.quartz.jobStore.misfireThreshold = 60000
+
+org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore
+
+
+
+#  quartz property 설정내용
+
+Cron Expression 의 특수문자
+'*' : 모든 수를 나타냄. 분의 위치에 * 설정하면 "매 분 마다" 라는 뜻.
+'?' : day-of-month 와 day-of-week 필드에서만 사용가능. 특별한 값이 없음을 나타낸다.
+'-' : "10-12" 과 같이 기간을 설정한다. 시간 필드에 "10-12" 이라 입력하면 "10, 11, 12시에 동작하도록 설정" 이란 뜻.
+',' : "MON,WED,FRI"와 같이 특정 시간을 설정할 때 사용한다. "MON,WED,FRI" 이면 " '월,수,금' 에만 동작" 이란 뜻.
+'/' : 증가를 표현합니다. 예를 들어 초 단위에 "0/15"로 세팅 되어 있다면 "0초 부터 시작하여 15초 이후에 동작" 이란 뜻.
+'L' : day-of-month 와 day-of-week 필드에만 사용하며 마지막날을 나타냅. 만약 day-of-month 에 "L" 로 되어 있다면 이번 달의 마지막에 실행하겠다는 것을 나타냄.
+'W' : day-of-month 필드에만 사용되며, 주어진 기간에 가장 가까운 평일(월~금)을 나타낸다. 만약 "15W" 이고 이번 달의 15일이 토요일이라면 가장가까운 14일 금요일날 실행된다. 또 15일이 일요일이라면 가장 가까운 평일인 16일 월요일에 실행되게 된다. 만약 15일이 화요일이라면 화요일인 15일에 수행된다.
+"LW" : L과 W를 결합하여 사용할 수 있으며 "LW"는 "이번달 마지막 평일"을 나타냄
+"#" : day-of-week에 사용된다. "6#3" 이면 3(3)번째 주 금요일(6) 이란 뜻이된다.1은 일요일 ~ 7은 토요일
+
+
+#  참고로 아래의 표는 CronTrigger 에서 작업주기를 설정하는 식의 예와 설명이다.
+
+    1. Seconds (0-59) - * /
+    2. Minutes (0-59)  - * /
+    3. Hours (0-23)  - * /
+    4. Day-of-month (1-31) - * ? / L W C
+    5. Month (1-12 or JAN-DEC) - * /
+    6. Day-of-week (1-7 or SUN-SAT) - * ? / L C #
+    7. Year (optional, empty, 1970-2099) - * /
+
+
+#  예시
+
+"0 0 12 * * ?"					매일 12시(정오)에실행
+"0 15 10 ? * *"					매일 오전 10시15분에 실행
+"0 15 10 * * ?"					매일 오전 10시15분에 실행
+"0 15 10 * * ? *"				매일 오전 10시15분에 실행
+"0 15 10 * * ? 2005"			2005년의 매일 오전 10시15분에 실행
+"0 * 14 * * ?"					매일 오후 2시부터 오후 2시59분까지 매분마다 실행
+"0 0/5 14 * * ?"				매일 오후 2시부터 오후 2시55분까지 매5분마다 실행
+"0 0/5 14,18 * * ?"				매일 오후 2시부터 오후 2시55분까지 매5분마다 실행 그리고 매일 오후 6시부터 오후 6시55분까지 매5분마다 실행
+"0 0-5 14 * * ?"				매일 오후 2시부터 오후 2시05분까지 매분마다 실행
+"0 10,44 14 ? 3 WED"			3월의 매주 수요일 오후 2시10분과 오후 2시44분에 실행
+"0 15 10 ? * MON-FRI"			매주 월, 화, 수, 목, 금요일 오전 10시15분에 실행
+"0 15 10 15 * ?"				매월 15일 오전 10시15분에 실행
+"0 15 10 L * ?"					매월 마지막날 오전 10시15분에 실행
+"0 15 10 ? * 6L"				매월 마지막 금요일 오전 10시15분에 실행
+"0 15 10 ? * 6L 2002-2005"		2002년부터 2005년까지의 매월 마지막 금요일 오전 10시15분에 실행
+"0 15 10 ? * 6#3"				매월 세번째 금요일 오전 10시15분에 실행

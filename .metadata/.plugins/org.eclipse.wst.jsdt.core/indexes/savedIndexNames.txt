@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+C:\dy\messerver\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2754442403.index
+2458225210.index
+776848282.index
+3777769087.index
+3717826906.index

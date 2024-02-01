@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="BasicDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<!-- Log4j Driver -->
+		
+		<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/>
+ 		<property name="url" value="jdbc:log4jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS_LIST = (LOAD_BALANCE=ON)(FAILOVER=ON)
+ 									${db.mes.url1}
+ 									${db.mes.url2})
+ 									(CONNECT_DATA = (SERVICE_NAME = ${db.mes.sid})))" 
+ 		/>
+		
+		<property name="maxActive"><value>30</value></property>
+        <property name="maxIdle"><value>10</value></property>
+        <property name="minIdle"><value>1</value></property>
+		
+		<!-- milli sec -->
+        <property name="maxWait"><value>-1</value></property><!-- 20000 -->
+        <property name="initialSize"><value>10</value></property>
+		<property name="validationQuery"><value>select 1 from dual</value></property>
+		<property name="testOnBorrow"><value>true</value></property>
+		<property name="minEvictableIdleTimeMillis"><value>30000</value></property>
+		<property name="timeBetweenEvictionRunsMillis"><value>60000</value></property>
+		
+		<!-- User Info -->
+		<property name="username" value="${db.mes.username}" />
+		<property name="password" value="${db.mes.password}" />
+
+		<property name="connectionProperties" value="v$session.program=${svr}#${seq}" />
+	</bean>
+	
+
+	<bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" depends-on="BasicDataSource">
+		<property name="dataSource" ref="BasicDataSource" />
+		<!-- sec -->
+		<property name="queryTimeout" value="30" />
+	</bean>
+
+
+	<bean id="NamedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" depends-on="BasicDataSource">
+		<constructor-arg ref="BasicDataSource" />
+	</bean>
+
+	<bean id="SqlNamedJdbcTemplate" class="kr.co.mesframe.orm.sql.SqlNamedJdbcTemplate" depends-on="NamedParameterJdbcTemplate">
+		<property name="namedParameterJdbcTemplate" ref="NamedParameterJdbcTemplate" />
+	</bean>
+	
+	<bean id="SqlTemplate" class="kr.co.mesframe.orm.sql.SqlTemplate" depends-on="JdbcTemplate">
+		<property name="jdbcTemplate" ref="JdbcTemplate" />
+	</bean>
+	
+	<bean id="platformTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="BasicDataSource" />
+	</bean>
+	
+	<!--  
+		propagationBehavior : 0(PROPAGATION_REQUIRED), 1(PROPAGATION_SUPPORTS), 2(PROPAGATION_MANDATORY), 3(PROPAGATION_REQUIRES_NEW), 
+		                      4(PROPAGATION_NOT_SUPPORTED), 5(PROPAGATION_NEVER), 6(PROPAGATION_NESTED)
+		                      default : 0(PROPAGATION_REQUIRED)
+		isolationLevel : -1(ISOLATION_DEFAULT), 1(ISOLATION_READ_UNCOMMITTED), 2(ISOLATION_READ_COMMITTED), 4(ISOLATION_REPEATABLE_READ), 8(ISOLATION_SERIALIZABLE)
+		timeout : -1(TIMEOUT_DEFAULT)
+		readOnly : false, true 
+	-->
+
+	<bean id="transactionDefinitionConfig" class="kr.co.mesframe.transaction.TransactionDefinitionConfig" >		
+		<property name="propagationBehavior" value="6"/>
+		<property name="isolationLevel" value="2"/>
+		<!-- sec -->
+		<property name="timeout" value="600"/>
+		<property name="readOnly" value="false"/>
+	</bean>
+	
+	<bean id="txManager" class="kr.co.mesframe.transaction.TxManager" >
+		<property name="platformTransactionManager" ref="platformTransactionManager" />
+		<!-- <property name="transactionDefinitionConfig" ref="transactionDefinitionConfig" /> -->
+	</bean>
+	
+	<bean id="IDClassService" class="kr.co.mesframe.namegenerator.IDClassService" />
+	
+	<bean id="exceptionMessageMap" class="kr.co.mesframe.exception.support.ExceptionMessageMap" depends-on="JdbcTemplate"/>
+	
+	<bean id="MESFrameExceptionProxy" class="kr.co.mesframe.MESFrameExceptionProxy">
+		<property name="exceptionMessageMap" ref="exceptionMessageMap" />
+	</bean>
+	
+	<bean id="MESFrameProxy" class="kr.co.mesframe.MESFrameProxy">
+		<property name="messageService" ref="messageService" />
+		<property name="platformTransactionManager" ref="platformTransactionManager" />
+		<property name="txManager" ref="txManager" />
+		<property name="messageLocatorFactory" ref="messageLocatorFactory" />
+		<property name="idClassService" ref="IDClassService"/>
+	</bean>
+</beans>

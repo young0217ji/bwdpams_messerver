@@ -1,0 +1,134 @@
+package test;
+import java.util.List;
+import java.util.Scanner;
+import com.min.dog.dao.DogDao;
+import com.min.dog.dao.DogDaoImpl;
+import com.min.dog.dto.Shelter_Dto;
+
+public class DOG_Main {
+
+	public static void main(String[] args) {
+//		DogDao dao = new  DogDaoImpl(); 
+		Scanner scan = new Scanner(System.in);
+		
+		String shelname = "";
+		String shelid = "";
+		String search = searchScan("",""); // 1번flow
+		
+		if(search == "1") {
+			String test = searchScan("1","A"); // 3번 flow  //9번flow
+			if(test == "y") {
+				searchScan("","");
+			} else {
+				searchScan("1","A"); // 10번flow
+			}
+//		} else if(search == "2") {
+//			String test2 = StrayDog();
+			
+		} else{ // 종료섹션
+			//종료에대한걸 명시해야지.
+			System.out.println("끝"); // connection 끊던가
+		}
+		
+		
+		
+//		List<Shelter_Dto> dtoList = dao.getAllShel(shelname);
+//		
+//		for(int i = 0; i < dtoList.size(); i++ ) {
+//			System.out.println("보호소명:" + dtoList.get(i).getshelname());
+//		}
+		
+//		Shelter_Dto dto = dao.getOneShel(shelid);
+		
+	}
+	
+	static String searchScan(String code, String code2) {
+		Scanner scan = new Scanner(System.in);
+		String search = "";
+		if(code == "1") {
+			if(code2 == "A") { // 보호소 A
+				System.out.println("보호소에서 원하시는 서비스를 선택하세요. 1~,2~,3~ 4~ 돌아가려면~ y"); // 4번flow // 11번
+				String shelterCode = scan.next();
+				search = shelter(shelterCode);                             //7번flow/
+				if(search == "q") {
+					return "종료";
+				}
+	//		} else if(code2 == "B") { // 유기견 섹션 B
+				
+				
+			} else{ // 종료 섹션 C
+				
+				
+				
+			}
+		} else {
+			System.out.println("원하시는 서비스를 선택하세요. 1.보호소, 2.유기견, 3.종료"); //  2번flow
+			search = scan.next();
+		}
+		
+		return search; //8번flow
+	}
+	
+	public static String shelter(String shelterCode){
+		Scanner scan = new Scanner(System.in);
+		DogDao dao = new  DogDaoImpl(); 
+		
+		String shelname = ""; // 보호소명
+		String shelid = ""; // 
+		String shelhours = ""; // 
+		String sheladd = ""; // 
+		String shelcontact = ""; // 
+		
+//		Scanner scan = new Scanner(System.in);
+		
+		 // 삭제넣으세요ㅕㅇ~
+		
+		if(shelterCode == "1") {
+			
+			shelname = scan.next(); // 5번flow
+//			List<Shelter_Dto> dtoList = dao.getAllShel(shelname);
+			
+//			for(int i = 0; i < dtoList.size(); i++ ) {
+//				System.out.println("보호소명:" + dtoList.get(i).getshelname() +  " 다른 정보들~"); 
+//			}
+			
+		} else if(shelterCode == "2") {
+			shelid = scan.next();
+//			Shelter_Dto dto = dao.getOneShel(shelid);
+//			System.out.println("보호소명:" + dto.getshelname() + "다른정보들~ ");
+			
+		} else if(shelterCode == "3") {
+			System.out.println("수정할 정보를 선택하셈,, 1.이름, 2.시간?, 3.연락처");
+			String updateSelect = scan.next();
+			if(updateSelect == "1") {
+				shelname = scan.next();
+				shelid = scan.next();
+				dao.updateShelname(shelname, shelid);
+			} else if (updateSelect == "2") {
+				shelhours = scan.next();
+				shelid = scan.next();
+				dao.updateShelhours(shelhours, shelid);
+			} else if (updateSelect == "3") {
+				sheladd = scan.next();
+				shelid = scan.next();
+				dao.updateSheladd(sheladd, shelid);
+			} else if (updateSelect == "4") {
+				shelcontact = scan.next();
+				shelid = scan.next();
+				dao.updateShelContact(shelcontact, shelid);
+			}
+			
+		} else if(shelterCode == "4") {
+			// 삭제 넣으세용
+		} else if(shelterCode == "y") {
+			return "y";
+		} else {
+			return "q"; // 제대로넣으세요임 
+		}
+		
+		return ""; //6번flow
+	}
+}
+
+
+

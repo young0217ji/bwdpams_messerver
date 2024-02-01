@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MES.Config.Service/META-INF/spring/6000DEV.properties&apos; to &apos;BWDEV.properties&apos;" description="Rename resource &apos;6000DEV.properties&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="META-INF/spring/6000DEV.properties" name="BWDEV.properties" stamp="1706595111368" updateReferences="true"/>
+</session>

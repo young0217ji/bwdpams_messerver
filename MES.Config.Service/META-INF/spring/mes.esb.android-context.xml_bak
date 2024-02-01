@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="androidLocatorFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+		<property name="serviceLocatorInterface" value="kr.co.mesframe.android.MessageLocatorFactory" />
+	</bean>
+
+	<bean id="androidConnection" class="kr.co.mesframe.activemq.MQConnection">
+   		<property name="uri" value="${jms.uri}" />
+    	<property name="name" value="${mode}.KR.${group}.ANDROID.${svr}.${seq}" />
+		<property name="connectionInterval" value="3000" />
+		<property name="retryCount" value="40" />
+   	</bean>
+
+   	<!-- Message Adapter -->
+   	<bean id="onAndroidService" class="kr.co.mesfactory.dispatcher.AndroidDispatcher" scope="prototype"/>
+   	
+   	<bean id="androidDelegateTaskExecutor" class="kr.co.mesfactory.dispatcher.AndroidTaskExecutor" scope="prototype" />
+   	
+   	<bean id="androidListenerAdapter" class="kr.co.mesframe.activemq.MessageListenerAdapter" >
+		<property name="delegate" ref="androidDelegate"/>
+	</bean>
+	
+	<bean id="androidDelegate" class="kr.co.mesframe.android.MessageDelegate">
+		<property name="taskExecutor">
+			<bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+				<property name="corePoolSize" value="20" />
+				<property name="maxPoolSize" value="2147483647" />
+				<property name="queueCapacity" value="60" />
+				<property name="keepAliveSeconds" value="500" />
+			</bean>
+		</property>
+		<property name="messageLocatorFactory" ref="androidLocatorFactory" />   	
+   	</bean>
+	
+   	<bean id="androidDQListener" class="kr.co.mesframe.activemq.SimpleMessageListenerContainer">
+   		<property name="connection" ref="androidConnection" />
+   		<property name="destination" value="${jms.AndroidTopicName}" />
+   		<property name="useVirtualTopic" value="${useVirtualTopic}" />
+   		<property name="consumerClient" value="${svr}" />
+   		<!-- <property name="destination" value="${svr}" /> -->
+   		<!-- �꽌踰꾨え�뱶 �꽑�깮  subject-->
+    	<property name="subject" value="" />
+    	<property name="serviceName" value="${mode}.KR.${group}.ANDROID.${svr}.${seq}" />
+    	<property name="global" value="true" />    	
+    	<property name="maxSize" value="100000" />
+    	<!-- MessageListener -->
+    	<property name="messageListener" ref="androidListenerAdapter" />
+   	</bean>
+   	   	
+</beans>

@@ -1,0 +1,120 @@
+package test;
+import java.util.List;
+import java.util.Scanner;
+//import com.min.dog.dao.DogDao;
+//import com.min.dog.dao.DogDaoImpl;
+//import com.min.dog.dto.Shelter_Dto;
+
+public class DOG_Main {
+
+	public static void main(String[] args) {
+		// Scanner scan = new Scanner(System.in);
+		
+		/* 로그인영역 start */
+		
+		/* 로그인영역 end */
+
+		/* 조회영역 start */
+		
+		searchScan();
+		
+		/* 조회영역 end */
+		
+	}
+	
+	static void searchScan() {
+		Scanner scan = new Scanner(System.in);
+		String search = "";
+		
+		System.out.println("원하시는 서비스를 선택하세요. 1.보호소, 2.유기견, 3.종료"); //  2번flow
+		search = scan.next();
+		searchScanSub(search);
+		
+	}
+	
+	static void searchScanSub(String search) {
+		Scanner scan = new Scanner(System.in);
+		String shelterResult = "";
+		
+		if(search.equals("1")) {
+			System.out.println("보호소에서 원하시는 서비스를 선택하세요. 1~,2~,3~ 4~ 돌아가려면~ y");
+			String shelterCode = scan.next();
+			shelterResult = shelter(shelterCode);
+			if(shelterResult.equals("y") ) {
+				searchScan();
+			} else if (shelterResult.equals("q")) {
+				System.out.println("값을 제대로 넣으세요");
+			} else {
+				searchScanSub("1");
+			}
+		} else if(search.equals("2")) { // 2 유기견
+			
+		} else { // 3 종료
+			
+		}
+		
+	}
+	
+	public static String shelter(String shelterCode){
+		Scanner scan = new Scanner(System.in);
+//		DogDao dao = new  DogDaoImpl(); 
+		
+		String shelname = ""; // 보호소명
+		String shelid = ""; // 
+		String shelhours = ""; // 
+		String sheladd = ""; // 
+		String shelcontact = ""; // 
+		
+//		Scanner scan = new Scanner(System.in);
+		
+		 // 삭제넣으세요ㅕㅇ~
+		
+		if(shelterCode.equals("1")) {
+			System.out.println("보호소 명을 입력하세요.");
+			shelname = scan.next(); // 5번flow
+//			List<Shelter_Dto> dtoList = dao.getAllShel(shelname);
+			
+//			for(int i = 0; i < dtoList.size(); i++ ) {
+//				System.out.println("보호소명:" + dtoList.get(i).getshelname() +  " 다른 정보들~"); 
+//			}
+			
+		} else if(shelterCode.equals("2")) {
+			shelid = scan.next();
+//			Shelter_Dto dto = dao.getOneShel(shelid);
+//			System.out.println("보호소명:" + dto.getshelname() + "다른정보들~ ");
+			
+		} else if(shelterCode.equals("3")) {
+			System.out.println("수정할 정보를 선택하셈,, 1.이름, 2.시간?, 3.연락처");
+			String updateSelect = scan.next();
+			if(updateSelect.equals("1")) {
+				shelname = scan.next();
+				shelid = scan.next();
+//				dao.updateShelname(shelname, shelid);
+			} else if (updateSelect.equals("2")) {
+				shelhours = scan.next();
+				shelid = scan.next();
+//				dao.updateShelhours(shelhours, shelid);
+			} else if (updateSelect.equals("3")) {
+				sheladd = scan.next();
+				shelid = scan.next();
+//				dao.updateSheladd(sheladd, shelid);
+			} else if (updateSelect.equals("4")) {
+				shelcontact = scan.next();
+				shelid = scan.next();
+//				dao.updateShelContact(shelcontact, shelid);
+			}
+			
+		} else if(shelterCode.equals("4")) {
+			// 삭제 넣으세용
+		} else if(shelterCode.equals("y")) {
+			return "y";
+		} else {
+			return "q"; // 제대로넣으세요임 
+		}
+		
+		return ""; //6번flow
+	}
+}
+
+
+

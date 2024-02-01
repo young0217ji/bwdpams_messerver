@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Service
+Bundle-SymbolicName: MES.UIF.Service
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Eclipse-RegisterBuddy: MES.Generic.Service, kr.co.mesfactory
+Require-Bundle: MES.Generic.Service;bundle-version="1.0.0",
+ kr.co.mesfactory;bundle-version="1.0.0",
+ com.springsource.org.apache.commons.collections;bundle-version="3.2.1",
+ kr.co.mesframe;bundle-version="1.0.0",
+ kr.co.mesframe.lib;bundle-version="1.0.0",
+ org.springframework.beans;bundle-version="3.1.1",
+ org.springframework.core;bundle-version="3.1.1",
+ slf4j.api;bundle-version="1.7.36",
+ org.eclipse.osgi;bundle-version="3.7.2"
+Export-Package: mes.uif.biz,
+ mes.uif.generic

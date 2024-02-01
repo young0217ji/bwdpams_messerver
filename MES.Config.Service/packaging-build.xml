@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="_packaging_generation_" name="Packaging Generator">
+    <property name="SPECVERSION" value="1.0.0" />
+    <property name="VERSION" value="1.0.0" />
+	<property name="PROJECTNAME" value="MES.Config.Service" />
+	
+	<target name="_packaging_generation_" depends="N10001" />
+	
+    <target name="clean" description="remove previous jar">
+        <delete file="../Dest_Library/${PROJECTNAME}-${VERSION}.jar" />
+    </target>
+	
+    <target name="N10001" description="creating jar" depends="clean">
+        <jar destfile="../Dest_Library/${PROJECTNAME}-${VERSION}.jar" manifest="META-INF/MANIFEST.MF">
+            <zipfileset dir="META-INF/" prefix="META-INF/">
+            	<include name="**/*.*" />
+            </zipfileset>
+            <zipfileset dir="bin" includes="**/*.class" />
+            <zipfileset dir="src" includes="**/*.*" />
+        </jar>
+    </target>
+	
+	<property name="ftp.MES.server1" value="192.168.0.200" />
+	<property name="ftp.MES.home.dir" value="/home/mesdev/MES/lib" />
+	<property name="ftp.MES.userid" value="mesdev" />
+	<property name="ftp.MES.pw" value="mesdev" />
+	
+	
+	<target name="time"> 
+        <tstamp> 
+            <format property="DSTAMP" pattern="yyyyMMdd"/> 
+            <format property="TSTAMP" pattern="HHmmss"/> 
+        </tstamp> 
+        <echo message="Current Time ======> ${DSTAMP}-${TSTAMP}"/> 
+    </target> 
+	
+	<target name="N20000" description="File Bakcup" depends="time">
+		<telnet server="${ftp.MES.server1}" 
+			userid="${ftp.MES.userid}" 
+			password="${ftp.MES.pw}" 
+			timeout="10" >
+			
+		    <write>cp -r /home/mesdev/MES/lib/${PROJECTNAME}-${VERSION}.jar /home/mesdev/MES/backup/${PROJECTNAME}-${VERSION}.jar_${DSTAMP}${TSTAMP}</write>
+			<read>/home/mesdev</read>
+		</telnet>
+	</target>
+	
+	
+	<target name="N20001" description="Upload jar" >
+	    <ftp server="${ftp.MES.server1}"
+	    	 remotedir="${ftp.MES.home.dir}"
+	         action="put"
+	    	 userid="${ftp.MES.userid}"
+	         password="${ftp.MES.pw}"
+	    	 depends="no"
+	    	 binary="yes" >
+
+	        <fileset dir="../Dest_Library/" >
+	            <include name="${PROJECTNAME}-${VERSION}.jar" />
+	        </fileset>
+		</ftp>
+	</target>
+</project>

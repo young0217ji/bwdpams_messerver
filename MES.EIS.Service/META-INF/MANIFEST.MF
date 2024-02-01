@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Service
+Bundle-SymbolicName: MES.EIS.Service
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Eclipse-RegisterBuddy: MES.Generic.Service, kr.co.mesfactory
+Export-Package: mes.eis.execution
+Require-Bundle: org.eclipse.osgi;bundle-version="3.7.2",
+ org.springframework.core;bundle-version="3.1.1",
+ com.springsource.org.apache.commons.collections;bundle-version="3.2.1",
+ kr.co.mesframe;bundle-version="1.0.0",
+ kr.co.mesframe.lib;bundle-version="1.0.0",
+ kr.co.mesfactory;bundle-version="1.0.0",
+ MES.Generic.Service;bundle-version="1.0.0",
+ MES.UDF.Service;bundle-version="1.0.0",
+ MES.Master.Service;bundle-version="1.0.0",
+ MES.Lot.Service;bundle-version="1.0.0",
+ MES.Durable.Service;bundle-version="1.0.0",
+ MES.Equipment.Service;bundle-version="1.0.0",
+ MES.Material.Service;bundle-version="1.0.0",
+ MES.Lot.Custom;bundle-version="1.0.0",
+ slf4j.api;bundle-version="1.7.36"

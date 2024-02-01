@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;TxnProcWorkOrderReplan.java&apos; to &apos;MES.Master.Custom/src/mes.master.biz&apos;&#x0D;&#x0A;- Original project: &apos;MES.Master.Custom&apos;&#x0D;&#x0A;- Destination element: &apos;MES.Master.Custom/src/mes.master.biz&apos;&#x0D;&#x0A;- Original element: &apos;mes.master.biz.TxnProcWorkOrderReplan.java&apos;" description="Copy compilation unit" destination="/src&lt;mes.master.biz" element1="/src&lt;mes.master.biz{TxnProcWorkOrderReplan.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1701933560419" units="1" version="1.0"/>
+</session>
