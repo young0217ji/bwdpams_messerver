@@ -12,7 +12,6 @@ import kr.co.mesframe.txninfo.TxnInfo;
 import kr.co.mesframe.util.DateUtil;
 import kr.co.mesframe.util.StringUtil;
 import mes.eis.common.EISCommonUtil;
-import mes.equipment.transaction.EquipmentService;
 import mes.event.MessageParse;
 import mes.lot.validation.LotValidation;
 import mes.master.data.EQUIPMENT;
@@ -33,7 +32,6 @@ public class TxnEquipmentStateChangeByEqp implements ObjectExecuteService
 		LotValidation validation = new LotValidation();
 		TxnInfo txnInfo = EventInfoUtil.setTxnInfo(recvDoc);
 
-		EquipmentService equipmentService = new EquipmentService();
 		EISCommonUtil eisCommonUtil = new EISCommonUtil();
 		validation.checkListNull(dataList);
 		
@@ -80,10 +78,8 @@ public class TxnEquipmentStateChangeByEqp implements ObjectExecuteService
 			
 			equipmentInfo = (EQUIPMENT) equipmentInfo.excuteDML(SqlConstant.DML_SELECTFORUPDATE);
 			
-			equipmentService.stateChange(equipmentInfo, state, txnInfo);
-			
 			//EIS Log 등록.
-			eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
+			//eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
 		}
 		
 		return recvDoc;

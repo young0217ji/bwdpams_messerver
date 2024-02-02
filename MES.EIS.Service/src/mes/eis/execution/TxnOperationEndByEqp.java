@@ -177,7 +177,7 @@ public class TxnOperationEndByEqp implements ObjectExecuteService
 			listResultMap.add(resultLotList);
 			
 			//EIS Log 등록.
-			eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
+			//eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
 		}
 		
 		Element element = sendMessageUtil.createElementFromList(listResultMap);

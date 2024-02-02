@@ -24,7 +24,6 @@ import mes.master.data.EQUIPMENT;
 import mes.material.data.MATERIALSTOCK;
 import mes.util.NameGenerator;
 import mes.lot.data.LOTCONSUMABLERATIOHISTORY;
-import mes.eis.data.DY_EISMESSAGE_LOG;
 
 /**
  * @author hslee
@@ -358,78 +357,6 @@ public class EISCommonUtil
 			
 			materialStock.excuteDML(SqlConstant.DML_INSERT);
 		}			
-	}
-	
-	public void setEISMessageLog(HashMap<String, String> mapEISMsgInfo)
-	{	
-		DY_EISMESSAGE_LOG dy_eismessage_log = new DY_EISMESSAGE_LOG();
-		
-		String plantID = ConvertUtil.Object2String(mapEISMsgInfo.get("PLANTID"));
-		String messageName = ConvertUtil.Object2String(mapEISMsgInfo.get("MESSAGENAME"));
-		String equipmentID = ConvertUtil.Object2String(mapEISMsgInfo.get("EQUIPMENTID"));
-				
-		NameGenerator nameGenerator = new NameGenerator();		
-		String messageID = nameGenerator.nameGenerate( plantID, "EISMessageID", new Object[] {plantID} );
-		messageID = messageID.replace(plantID + "-", "");
-
-		dy_eismessage_log.setKeyMESSAGEID(ConvertUtil.Object2Int4Zero(messageID));
-		dy_eismessage_log.setPLANTID(plantID);			
-		dy_eismessage_log.setMESSAGENAME(messageName);
-		dy_eismessage_log.setEQUIPMENTID(equipmentID);			
-		
-		if(mapEISMsgInfo.containsKey("SCANID"))
-			dy_eismessage_log.setSCANID(ConvertUtil.Object2String(mapEISMsgInfo.get("SCANID")));
-		
-		if(mapEISMsgInfo.containsKey("ENDSCANID"))
-			dy_eismessage_log.setENDSCANID(ConvertUtil.Object2String(mapEISMsgInfo.get("ENDSCANID")));
-		
-		if(mapEISMsgInfo.containsKey("STATE"))
-			dy_eismessage_log.setSTATE(ConvertUtil.Object2String(mapEISMsgInfo.get("STATE")));
-		
-		if(mapEISMsgInfo.containsKey("ARARMID"))
-			dy_eismessage_log.setARARMID(ConvertUtil.Object2String(mapEISMsgInfo.get("ARARMID")));
-		
-		if(mapEISMsgInfo.containsKey("ARARMCOMMENT"))
-			dy_eismessage_log.setARARMCOMMENT(ConvertUtil.Object2String(mapEISMsgInfo.get("ARARMCOMMENT")));
-		
-		if(mapEISMsgInfo.containsKey("TAGID"))
-			dy_eismessage_log.setTAGID(ConvertUtil.Object2String(mapEISMsgInfo.get("TAGID")));
-
-		if(mapEISMsgInfo.containsKey("TAGVALUE"))
-			dy_eismessage_log.setTAGVALUE(ConvertUtil.Object2String(mapEISMsgInfo.get("TAGVALUE")));
-
-		if(mapEISMsgInfo.containsKey("EVENTTIME"))
-			dy_eismessage_log.setEVENTTIME(ConvertUtil.Object2String(mapEISMsgInfo.get("EVENTTIME")));
-		
-		if(mapEISMsgInfo.containsKey("EISEVENTRESULT"))
-			dy_eismessage_log.setEISEVENTRESULT(ConvertUtil.Object2String(mapEISMsgInfo.get("EISEVENTRESULT")));
-		
-		if(mapEISMsgInfo.containsKey("EISEVENTCOMMENT"))
-			dy_eismessage_log.setEISEVENTCOMMENT(ConvertUtil.Object2String(mapEISMsgInfo.get("EISEVENTCOMMENT")));
-		
-		if(mapEISMsgInfo.containsKey("EISEVENTUSER"))
-			dy_eismessage_log.setEISEVENTUSER(ConvertUtil.Object2String(mapEISMsgInfo.get("EISEVENTUSER")));
-		
-		if(mapEISMsgInfo.containsKey("EISEVENTTIME"))
-			dy_eismessage_log.setEISEVENTTIME(DateUtil.getCurrentTimestamp());
-	
-		
-		if(mapEISMsgInfo.containsKey("RESERVEFIELD1"))
-			dy_eismessage_log.setRESERVEFIELD1(ConvertUtil.Object2String(mapEISMsgInfo.get("RESERVEFIELD1")));
-		
-		if(mapEISMsgInfo.containsKey("RESERVEFIELD2"))
-			dy_eismessage_log.setRESERVEFIELD2(ConvertUtil.Object2String(mapEISMsgInfo.get("RESERVEFIELD2")));
-		
-		if(mapEISMsgInfo.containsKey("RESERVEFIELD3"))
-			dy_eismessage_log.setRESERVEFIELD3(ConvertUtil.Object2String(mapEISMsgInfo.get("RESERVEFIELD3")));
-		
-		if(mapEISMsgInfo.containsKey("RESERVEFIELD4"))
-			dy_eismessage_log.setRESERVEFIELD4(ConvertUtil.Object2String(mapEISMsgInfo.get("RESERVEFIELD4")));
-		
-		if(mapEISMsgInfo.containsKey("RESERVEFIELD5"))
-			dy_eismessage_log.setRESERVEFIELD5(ConvertUtil.Object2String(mapEISMsgInfo.get("RESERVEFIELD5")));
-
-		dy_eismessage_log.excuteDML(SqlConstant.DML_INSERT);
 	}
 	
 	public String getIPCCurrentUser(String plantID, String equipmentID)

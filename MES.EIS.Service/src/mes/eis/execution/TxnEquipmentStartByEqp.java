@@ -111,7 +111,7 @@ public class TxnEquipmentStartByEqp implements ObjectExecuteService
 					recipeRelationCode, recipeTypeCode, txnInfo, Constant.CONTROL_MODE_MANUAL);		
 			
 			//EIS Log 등록.
-			eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
+			//eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
 		}
 		
 		return recvDoc;

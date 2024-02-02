@@ -101,7 +101,7 @@ public class TxnDataResultByEqp implements ObjectExecuteService
 			processDataResult.excuteDML(SqlConstant.DML_INSERT);
 			
 			//EIS Log 등록.
-			eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
+			//eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
 		}
 		
 		return recvDoc;

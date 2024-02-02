@@ -15,7 +15,6 @@ import mes.lot.data.WORKORDER;
 import mes.lot.validation.LotValidation;
 import mes.master.data.EQUIPMENT;
 import mes.constant.Constant;
-import mes.equipment.transaction.EquipmentService;
 import mes.errorHandler.CustomException;
 import mes.util.EventInfoUtil;
 import mes.util.NameGenerator;
@@ -46,7 +45,6 @@ public class TxnEquipmentSetWorkorder implements ObjectExecuteService
 		TxnInfo txnInfo = EventInfoUtil.setTxnInfo(recvDoc);
 
 		LotValidation validation = new LotValidation();
-		EquipmentService equipmentService = new EquipmentService();
 		
 		for ( int i = 0; i < dataList.size(); i++ ) {
 			

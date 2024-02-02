@@ -215,7 +215,7 @@ public class TxnOperationStartByEqp implements ObjectExecuteService
 
 			
 			//EIS Log 등록.
-			eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
+			//eisCommonUtil.setEISMessageLog(mapEISMsgInfo);
 		}
 		
 		Element element = sendMessageUtil.createElementFromList(listResultMap);

@@ -15,7 +15,6 @@ import mes.lot.data.WORKORDER;
 import mes.lot.validation.LotValidation;
 import mes.master.data.EQUIPMENT;
 import mes.constant.Constant;
-import mes.equipment.transaction.EquipmentService;
 import mes.errorHandler.CustomException;
 import mes.util.EventInfoUtil;
 import mes.util.NameGenerator;
