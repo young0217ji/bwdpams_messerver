@@ -98,20 +98,6 @@ public class NameGenerator
 	
 	/**
 	 * 
-	 * 계측기 ID생성.
-	 * PLANT.REPRESENTATIVECHAR + DY_INSTRUMENT.ITEMTYPE + Serial(00000)
-	 *
-	 * @param parameter
-	 * @return returnType
-	 * @throws Exception
-	 *
-	 */
-	public String InstrumentItemIDGenerate(String plantID, String representActivechar, String ItemType)
-	{
-		return nameGenerate( plantID, "InstrumentItemID", new Object[] {representActivechar, ItemType} );
-	}
-	/**
-	 * 
 	 * plantID 공장에 ruleName, nameCount, args에 따라
 	 * 규칙에 맞게 이름을 생성하여 리스트로 리턴합니다
 	 *
@@ -263,48 +249,5 @@ public class NameGenerator
 		String typeCode = name.replace(processFlow, "") + "0";
 		
 		return typeCode;
-	}
-	
-	/**
-	 * 
-	 * plantID 공장의 certificationId에 materialType을 구분하여
-	 * ID를 규칙에 맞게 생성합니다
-	 *
-	 * @param plantID
-	 * @param certificationType
-	 * @return String
-	 *
-	 */
-	public String CertificationIDGenerate(String plantID, String certificationType )
-	{
-		// CertificationId 생성을 위한 argument 설정.
-		String certificationTypeCode;
-		
-		if(certificationType.equals("PsPersonnel")) {
-			certificationTypeCode = "PS";
-		
-			return nameGenerate( plantID, "CertificationID", new Object[] { certificationTypeCode });
-		} else {
-			
-			if( certificationType.equals("UtPersonnel"))
-			{
-				certificationTypeCode = "U";
-			}
-			else if( certificationType.equals("WeldingPersonnel"))
-			{
-				certificationTypeCode = "W";
-			}
-			
-			else if( certificationType.equals("PlantingPersonnel"))
-			{
-				certificationTypeCode = "P";
-			}
-			else
-			{
-				certificationTypeCode = "T";
-			}
-			
-			return nameGenerate( plantID, "CertificationID2", new Object[] { certificationTypeCode });
-		}
 	}
 }
