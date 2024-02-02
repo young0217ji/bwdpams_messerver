@@ -18,7 +18,6 @@ import mes.errorHandler.CustomException;
 import mes.event.MessageParse;
 import mes.lot.data.LOTINFORMATION;
 import mes.lot.data.VIEWLOTTRACKING;
-import mes.lot.transaction.RecipeService;
 import mes.master.data.DURABLEINFORMATION;
 import mes.master.data.EQUIPMENT;
 import mes.material.data.MATERIALSTOCK;
