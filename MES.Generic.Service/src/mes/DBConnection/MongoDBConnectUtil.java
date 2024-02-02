@@ -22,7 +22,7 @@ public class MongoDBConnectUtil
 	 */
 	public static synchronized MongoClient getConnection() {
 
-		String sUrl = "mongodb://interx:interx%40504@10.21.1.25:27017/?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&authSource=DYP&authMechanism=SCRAM-SHA-1";
+		String sUrl = "mongodb://interx:interx%40504@10.21.1.25:27017/?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&authSource=BW&authMechanism=SCRAM-SHA-1";
 		MongoClientURI oConnectURL = new MongoClientURI(sUrl);
 		return new MongoClient(oConnectURL);
 	}
