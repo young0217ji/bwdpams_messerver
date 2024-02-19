@@ -3,6 +3,7 @@
 	<name>MES.Config.Service</name>
 	<comment></comment>
 	<projects>
+		<project>kr.co.mesframe.targetplatform</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
