@@ -24,7 +24,7 @@
 	</bean>
  -->  
 
-<!-- QA 서버 구동시 DEV DB의 특정 테이블 동기화 1번만 수행 -->
+<!-- QA 서버 구동시 DEV DB의 특정 테이블 동기화 1번만 수행
 	<bean id="DatabaseSyncQA"	class="mes.time.biz.DatabaseSyncQA" />
 	<bean id="DatabaseSync" class="mes.time.biz.SchedulerService" depends-on="DatabaseSyncQA">
 		<property name="jobClass">
@@ -34,8 +34,8 @@
 		<property name="repeatInterval" value="10000"/>
 		<property name="repeatCount" value="0"/>    
 	</bean>
-
-<!-- WorkOrder의 PlanQty 기준으로 추가 생성 가능한 수량만큼 Lot자동으로 생성. 매분 0초가 되는 시점에 동작..  -->
+ -->
+<!-- WorkOrder의 PlanQty 기준으로 추가 생성 가능한 수량만큼 Lot자동으로 생성. 매분 0초가 되는 시점에 동작..  
 	<bean id="AutoCreateLot"	class="mes.time.biz.AutoCreateLot" />
 	<bean id="CreateLot" class="mes.time.biz.SchedulerService" depends-on="AutoCreateLot">
 		<property name="jobClass">
@@ -44,9 +44,9 @@
 		<property name="scheduleName" value="AutoCreateLot"/>
 		<property name="cronExpression" value="0 * * * * ?"/>
 	</bean>
+	-->
 	
-	
-<!-- 자격인증관리의 자격상실예정일 기준으로 자격상실,자격상실일자 업데이트. 매일 0시가 되는 시점에 동작  -->
+<!-- 자격인증관리의 자격상실예정일 기준으로 자격상실,자격상실일자 업데이트. 매일 0시가 되는 시점에 동작 
 	<bean id="DisqualificationDate"	class="mes.time.biz.DisqualificationDate" />
 	<bean id="UpdateDisqualification" class="mes.time.biz.SchedulerService" depends-on="DisqualificationDate">
 		<property name="jobClass">
@@ -55,5 +55,5 @@
 		<property name="scheduleName" value="DisqualificationDate"/>
 		<property name="cronExpression" value="0 0 0 * * ?"/> 
 	</bean>
-
+ -->
 </beans>
