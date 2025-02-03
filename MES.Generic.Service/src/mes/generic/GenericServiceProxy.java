@@ -1,6 +1,6 @@
 package mes.generic;
 
-import mes.constant.PlantConstant;
+import mes.constant.FactoryConstant;
 import mes.errorHandler.CustomExceptionMap;
 import mes.event.MessageAdaptor;
 import mes.event.MessageEventMap;
@@ -18,7 +18,7 @@ public class GenericServiceProxy {
 	private static MessageAdaptor messageAdaptor;
 	private static CustomExceptionMap customExceptionMap;
 	private static MessageEventMap messageEventMap;
-	private static PlantConstant plantConstant;
+	private static FactoryConstant factoryConstant;
 	private static TargetPlantMap targetPlantMap;
 	
 	/**
@@ -95,27 +95,27 @@ public class GenericServiceProxy {
 	}
 	/**
 	 * 
-	 * plantConstant를 불러옵니다
+	 * factoryConstant를 불러옵니다
 	 *
 	 * @param 
 	 * @return returnType
 	 *
 	 */
-	public static PlantConstant getPlantConstant()
+	public static FactoryConstant getFactoryConstant()
 	{
-		return plantConstant;
+		return factoryConstant;
 	}
 	/**
 	 * 
-	 * plantConstant을 세팅합니다
+	 * factoryConstant을 세팅합니다
 	 *
-	 * @param plantConstant
+	 * @param factoryConstant
 	 * @return 
 	 *
 	 */
-	public void setPlantConstant(PlantConstant plantConstant)
+	public void setFactoryConstant(FactoryConstant factoryConstant)
 	{
-		GenericServiceProxy.plantConstant = plantConstant;
+		GenericServiceProxy.factoryConstant = factoryConstant;
 	}
 	/**
 	 * 

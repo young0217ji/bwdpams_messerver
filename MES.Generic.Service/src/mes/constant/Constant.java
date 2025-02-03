@@ -13,7 +13,7 @@ public class Constant
 	 * PLANT ID Information
 	 * PLANT Table 조회
 	 */
-	public static final String PLANTID = PlantConstant.getPlantID();
+	public static final String FACTORY_ID = FactoryConstant.getFactoryId();
 	
 
 	/*

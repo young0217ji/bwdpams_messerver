@@ -29,7 +29,7 @@ public class CustomExceptionMap implements InitializingBean
 	private Locale locale;
 	private static Map<String, CustomExceptionDef> customExceptionMap = new HashMap<String, CustomExceptionDef>();
 
-	private static String SqlCustomException = "SELECT exceptionID, localeID, exceptionType, exceptionMessage FROM customException ORDER BY exceptionID";
+	private static String SqlCustomException = "SELECT EXCEP_ID, LOCAL_EID, EXCEP_TYPE, EXCEP_MSG FROM CUST_EXCEP ORDER BY EXCEP_ID";
 
 	public CustomExceptionMap()
 	{
@@ -109,11 +109,11 @@ public class CustomExceptionMap implements InitializingBean
 		for ( int i = 0 ; i < resultList.size(); i++)
 		{
 			LinkedCaseInsensitiveMap orderMap= (LinkedCaseInsensitiveMap)resultList.get(i);
-		
-			String exceptionID = ConvertUtil.Object2String(orderMap.get("exceptionID"));
-			String localeID = ConvertUtil.Object2String(orderMap.get("localeID"));
-			String exceptionType = ConvertUtil.Object2String(orderMap.get("exceptionType"));
-			String exceptionMessage = ConvertUtil.Object2String(orderMap.get("exceptionMessage"));
+			
+			String exceptionID = ConvertUtil.Object2String(orderMap.get("EXCEP_ID"));
+			String localeID = ConvertUtil.Object2String(orderMap.get("LOCAL_EID"));
+			String exceptionType = ConvertUtil.Object2String(orderMap.get("EXCEP_TYPE"));
+			String exceptionMessage = ConvertUtil.Object2String(orderMap.get("EXCEP_MSG"));
 		
 			CustomExceptionDef customExceptionDef = new CustomExceptionDef();
 			customExceptionDef.setExceptionID(exceptionID);
@@ -187,7 +187,7 @@ public class CustomExceptionMap implements InitializingBean
 			if ( getCustomExceptionDef("CM-000", localeID) == null )
 			{
 				// [{1}] 데이터는 [{0}] 테이블에 존재하지 않습니다.
-				throw new MESFrameException(ExceptionKey.NotFoundObjectException, exceptionID, "CUSTOMEXCEPTION");
+				throw new MESFrameException(ExceptionKey.NotFoundObjectException, exceptionID, "CUST_EXCEP");
 			}
 			else
 			{

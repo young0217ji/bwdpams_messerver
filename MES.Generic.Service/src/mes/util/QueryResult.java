@@ -11,7 +11,7 @@ import org.springframework.util.LinkedCaseInsensitiveMap;
 import kr.co.mesframe.orm.sql.SqlMesTemplate;
 import kr.co.mesframe.orm.sql.util.SqlLogUtil;
 import mes.constant.Constant;
-import mes.constant.PlantConstant;
+import mes.constant.FactoryConstant;
 import mes.errorHandler.CustomException;
 import mes.generic.GenericServiceProxy;
 
@@ -38,7 +38,7 @@ public class QueryResult
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<LinkedCaseInsensitiveMap> getQueryResult(String queryID, HashMap<String, Object> bindMap) {
-		return getQueryResult(PlantConstant.getPlantID(), queryID, Constant.VERSION_DEFAULT, bindMap);
+		return getQueryResult(FactoryConstant.getFactoryId(), queryID, Constant.VERSION_DEFAULT, bindMap);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class QueryResult
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<LinkedCaseInsensitiveMap> getQueryResult(String queryID, String version, HashMap<String, Object> bindMap) {
-		return getQueryResult(PlantConstant.getPlantID(), queryID, version, bindMap);
+		return getQueryResult(FactoryConstant.getFactoryId(), queryID, version, bindMap);
 	}
 	
 	/**

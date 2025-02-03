@@ -58,7 +58,7 @@ public class TargetPlantMap implements InitializingBean
 	@SuppressWarnings("rawtypes")
 	public static void load()
 	{
-		String subjectSql = "SELECT eventName, targetSubjectName, targetPlant FROM dispatchEvent WHERE targetPlant IS NOT NULL "; 
+		String subjectSql = "SELECT EVENT_NM, TGT_SBJT_NM, TGT_FACTORY FROM DSPCH_EVENT WHERE TGT_FACTORY IS NOT NULL "; 
 			
 		List resultList = null;
 		
@@ -75,10 +75,10 @@ public class TargetPlantMap implements InitializingBean
 		{
 			LinkedCaseInsensitiveMap orderMap= (LinkedCaseInsensitiveMap)resultList.get(i);
 		
-			String eventName = orderMap.get("eventName").toString();
-			if ( orderMap.get("targetPlant") != null )
+			String eventName = orderMap.get("EVENT_NM").toString();
+			if ( orderMap.get("TGT_FACTORY") != null )
 			{
-				String targetPlantID = orderMap.get("targetPlant").toString();
+				String targetPlantID = orderMap.get("TGT_FACTORY").toString();
 				
 				eventMap.put(eventName, targetPlantID);
 			}

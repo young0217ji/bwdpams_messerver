@@ -80,7 +80,7 @@ public class MessageEventMap implements InitializingBean
 		}
 		
 		logger.info("Server Name : {}", serverName);
-		String eventSql = "SELECT eventName, className FROM dispatchEvent WHERE plantID = ? AND serverName = ? ";
+		String eventSql = "SELECT EVENT_NM, CLASS_NM FROM DSPCH_EVENT WHERE FACTORY_ID = ? AND SVR_NM = ? ";
 			
 		List resultList = null;
 		
@@ -93,8 +93,8 @@ public class MessageEventMap implements InitializingBean
 		{
 			LinkedCaseInsensitiveMap orderMap= (LinkedCaseInsensitiveMap)resultList.get(i);
 		
-			String eventName = orderMap.get("eventName").toString();
-			String className = orderMap.get("className").toString();
+			String eventName = orderMap.get("EVENT_NM").toString();
+			String className = orderMap.get("CLASS_NM").toString();
 			
 			dispatchMap.put(eventName, className);
 		}

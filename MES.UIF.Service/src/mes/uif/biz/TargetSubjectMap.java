@@ -34,7 +34,7 @@ public class TargetSubjectMap implements InitializingBean
 	@SuppressWarnings("rawtypes")
 	public static void load()
 	{
-		String subjectSql = "SELECT eventName, targetSubjectName FROM dispatchEvent WHERE plantID = ? AND serverName = ?"; 
+		String subjectSql = "SELECT EVENT_NM, TGT_SBJT_NM FROM DSPCH_EVENT WHERE FACTORY_ID = ? AND SVR_NM = ?"; 
 			
 		List resultList = null;
 		
@@ -51,10 +51,10 @@ public class TargetSubjectMap implements InitializingBean
 		{
 			LinkedCaseInsensitiveMap orderMap= (LinkedCaseInsensitiveMap)resultList.get(i);
 		
-			String eventName = orderMap.get("eventName").toString();
-			if ( orderMap.get("targetSubjectName") != null )
+			String eventName = orderMap.get("EVENT_NM").toString();
+			if ( orderMap.get("TGT_SBJT_NM") != null )
 			{
-				String subjectName = orderMap.get("targetSubjectName").toString();
+				String subjectName = orderMap.get("TGT_SBJT_NM").toString();
 				
 				eventMap.put(eventName, subjectName);
 			}
