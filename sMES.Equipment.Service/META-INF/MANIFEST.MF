@@ -9,11 +9,11 @@ Require-Bundle: org.eclipse.osgi;bundle-version="3.7.2",
  kr.co.mesframe;bundle-version="1.0.0",
  kr.co.mesframe.lib;bundle-version="1.0.0",
  kr.co.mesfactory;bundle-version="1.0.0",
- sMES.Generic.Service;bundle-version="1.0.0",
+ MES.Generic.Service;bundle-version="1.0.0",
  sMES.UDF.Service;bundle-version="1.0.0",
  sMES.Master.Service;bundle-version="1.0.0",
  sMES.Lot.Service;bundle-version="1.0.0",
  slf4j.api;bundle-version="1.7.36"
-Eclipse-RegisterBuddy: sMES.Generic.Service, kr.co.mesfactory
+Eclipse-RegisterBuddy: MES.Generic.Service, kr.co.mesfactory
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: mes.equipment.transaction

@@ -4,8 +4,8 @@ Bundle-Name: Service
 Bundle-SymbolicName: sMES.Time.Service
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Eclipse-RegisterBuddy: sMES.Generic.Service, MES.Message.Service
-Require-Bundle: sMES.Generic.Service;bundle-version="1.0.0",
+Eclipse-RegisterBuddy: MES.Generic.Service, MES.Message.Service
+Require-Bundle: MES.Generic.Service;bundle-version="1.0.0",
  com.springsource.org.apache.commons.collections;bundle-version="3.2.1",
  com.springsource.org.quartz;bundle-version="1.6.2",
  kr.co.mesframe;bundle-version="1.0.0",

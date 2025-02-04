@@ -4,7 +4,7 @@ Bundle-Name: Service
 Bundle-SymbolicName: sMES.UDF.Service
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Eclipse-RegisterBuddy: sMES.Generic.Service
+Eclipse-RegisterBuddy: MES.Generic.Service
 Require-Bundle: org.eclipse.osgi;bundle-version="3.7.2",
  com.springsource.org.apache.commons.collections;bundle-version="3.2.1",
  kr.co.mesframe;bundle-version="1.0.0",
