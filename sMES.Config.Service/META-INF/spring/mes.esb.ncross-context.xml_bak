@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- <bean id="jmsFactory" class="com.nguru.mq.jms.NConnectionFactory">	
+		<property name="url" value="tcp://localhost:9501" />
+	</bean> -->
+	
+	<bean id="messageLocatorFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+		<property name="serviceLocatorInterface" value="kr.co.mesframe.esb.MessageLocatorFactory" />
+	</bean>
+	
+	<bean id="Connection" class="kr.co.mesframe.esb.ncross.Connection">
+    	<property name="name" value="${mode}.${svr}" />
+	<!-- 울산공장 -->
+   		<property name="uri" value="${ncross.uri}" />
+		<property name="jmxPort" value="${ncross.jmxport}" />
+		<property name="connectionInterval" value="3000" />
+		<property name="retryCount" value="40" />
+   	</bean>
+
+   	
+   	<!-- Message Adapter -->
+   	<bean id="onMessageService" class="kr.co.mesfactory.dispatcher.MessageDispatcher" scope="prototype"/>
+   	
+   	<bean id="messageDelegateTaskExecutor" class="kr.co.mesfactory.dispatcher.MessageTaskExecutor" scope="prototype" />
+   	
+   	<bean id="messageListenerAdapter" class="kr.co.mesframe.esb.ncross.adapter.MessageListenerAdapter" >
+		<property name="delegate" ref="delegate"/>
+	</bean>
+	
+	<bean id="delegate" class="kr.co.mesframe.esb.ncross.adapter.delegate.MessageDelegate">
+		<property name="taskExecutor">
+			<bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+				<property name="corePoolSize" value="20" />
+				<property name="maxPoolSize" value="2147483647" />
+				<property name="queueCapacity" value="60" />
+				<property name="keepAliveSeconds" value="500" />
+			</bean>
+		</property>
+		<property name="messageLocatorFactory" ref="messageLocatorFactory" />   	
+   	</bean>
+	
+	
+   	<!-- <bean id="DQListener" class="kr.co.mesframe.esb.ncross.listener.SimpleMessageListenerContainer" init-method="listen" destroy-method="unListen" depends-on="Connection" > -->
+   	<bean id="DQListener" class="kr.co.mesframe.esb.ncross.listener.SimpleMessageListenerContainer">
+   		<property name="connection" ref="Connection" />
+   		<!-- <property name="connectionFactory" ref="jmsFactory" /> -->
+   		<property name="destination" value="${svr}" />
+   		<!-- 서버모드 선택  subject-->
+    	<property name="subject" value="subject like '${ncross.subject}%'" />
+<!--     	<property name="subject" value="subject like 'QAPROG%'" /> -->
+    	<property name="serviceName" value="${mode}.KR.${group}.MES.${svr}" />
+    	<property name="global" value="true" />    	
+    	<property name="maxSize" value="100000" />
+    	<!-- MessageListener -->
+    	<property name="messageListener" ref="messageListenerAdapter" />
+    	<!-- <property name="messageListener" ref="messageFormatter" /> -->
+   	</bean>
+   	
+    <bean id="jmsSender" class="kr.co.mesframe.esb.ncross.core.TopicSender" depends-on="Connection" >
+   		<property name="connection" ref="Connection" />
+    	<property name="destination" value="${svr}" />
+    	<property name="subject" value="${mode}.KR.${group}.MES.${svr}" />
+   	</bean>
+   	
+   	<bean id="messageService" class="kr.co.mesframe.esb.bundle.NCrossMessageServiceImpl" >
+   		<property name="topicSender" ref="jmsSender" />
+   	</bean>
+   	
+   	<bean id="messageFormat" class="kr.co.mesframe.esb.core.MessageFormatImpl" scope="prototype"/>
+   	
+</beans>

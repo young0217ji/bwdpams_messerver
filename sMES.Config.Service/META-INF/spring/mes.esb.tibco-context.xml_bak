@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="messageLocatorFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+		<property name="serviceLocatorInterface" value="kr.co.mesframe.esb.MessageLocatorFactory" />
+	</bean>
+
+	<!-- TIBCO OPEN -->
+	<bean id="Tibco" class="kr.co.mesframe.esb.tibco.transport.Tibco"/>
+	
+	<!-- Message Adapter -->
+	<bean id="onMessageService" class="kr.co.mesfactory.dispatcher.MessageDispatcher" scope="prototype"/>
+	
+ 	<bean id="messageDelegateTaskExecutor" class="kr.co.mesfactory.dispatcher.TibcoMessageTaskExecutor" scope="prototype" />
+ 	
+	<bean id="messageListenerAdapter" class=" kr.co.mesframe.esb.tibco.adapter.MessageListenerAdapter" >
+		<property name="delegate" ref="delegate"/>
+		<!-- <property name="delayTime" value="2000"/> Thread Delay MilliSec -->
+	</bean>
+	
+	<bean id="delegate" class="kr.co.mesframe.esb.tibco.adapter.delegate.MessageDelegate">
+		<property name="taskExecutor">
+			<bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+				<property name="corePoolSize" value="100" />
+				<property name="maxPoolSize" value="1000" />
+				<property name="queueCapacity" value="2000" />
+				<property name="keepAliveSeconds" value="300" /> <!-- 5 Min TimeOut -->
+			</bean>
+		</property>
+		<property name="messageLocatorFactory" ref="messageLocatorFactory" />
+		<property name="subject" value="${mode}.KR.${group}.MES.${svr}"/>
+   	</bean>
+   	
+   	<bean id="CmTransportFactoryService" class="kr.co.mesframe.esb.tibco.transport.CmTransportFactoryService">
+		<property name="rvdTransportFactoryService" ref="RvdTransportFactorySource" />
+		<property name="cmName" value="${mode}.KR.${group}.MES.${svr}.${seq}" /> <!-- Unique Name -->
+		<property name="ledgerName" value="./config/${mode}.KR.${group}.MES.${svr}.${seq}" /> <!-- Unique Name -->
+   	</bean>
+   	
+   	<bean id="RvdTransportFactorySource" class="kr.co.mesframe.esb.tibco.transport.RvdTransportFactoryService">
+		<property name="service" value="${tibco.source.service}" /> <!-- Port Info -->
+		<property name="network" value="${tibco.source.network}" /> <!-- Multi Cast -->
+  		<property name="daemon" value="${tibco.source.daemon}" /> <!-- IP : tcp:7575 (Remote) -->
+  		<property name="description" value="${group}.${svr}.${seq}" />
+   	</bean>
+
+<!-- 
+ 	<bean id="SimpleListener" class="kr.co.mesframe.esb.tibco.sample.SimpleMessageListenerTest">
+		<property name="messageListener" ref="messageListenerAdapter"/>
+		<property name="rvdTransportFactory" ref="RvdTransportFactorySource"/>
+		<property name="subject" value="${mode}.KR.${group}.MES.${svr}"/>
+		<property name="descript" value="${group}.${svr}.${seq}_TIbco_RV_LISTEN"/>		
+   	</bean>
+ -->
+
+<!-- DQ(CM) Listener -->   	
+   	<bean id="cmQueueTransportFactoryService1" class="kr.co.mesframe.esb.tibco.transport.CmQueueTransportFactoryService">
+		<property name="rvdTransportFactoryService" ref="RvdTransportFactorySource" />
+		<property name="cmName" value="${mode}.KR.${group}.MES.${svr}.DQ"/>
+		<property name="workerWeight" value="${tibco.cm.workerweight.1}" />
+		<property name="workerTasks" value="${tibco.cm.workertasks.1}" />		
+		<property name="schedulerWeight" value="${tibco.cm.schedulerweight.1}" />
+		<property name="schedulerHeartbeat" value="${tibco.cm.schedulerheartbeat.1}" />
+		<property name="schedulerActivation" value="${tibco.cm.scheduleractivation.1}" />
+		<property name="descript" value="${group}.${svr}.${seq}_TIbco_RV_DQ_LISTEN_SCHEDULE"/>
+   	</bean>	
+   	
+   	 <bean id="Listener1" class="kr.co.mesframe.esb.tibco.listener.TibcoMessageDQListener">
+		<property name="messageListener" ref="messageListenerAdapter"/>
+		<property name="cmQueueTransportFactoryService" ref="cmQueueTransportFactoryService1"/>
+		<property name="subject" value="${mode}.KR.${group}.MES.${svr}"/>
+   	</bean>
+
+   	<bean id="cmQueueTransportFactoryService2" class="kr.co.mesframe.esb.tibco.transport.CmQueueTransportFactoryService">
+		<property name="rvdTransportFactoryService" ref="RvdTransportFactorySource" />
+		<property name="cmName" value="${mode}.KR.${group}.MES.${svr}.DQ"/>
+		<property name="workerWeight" value="${tibco.cm.workerweight.2}" />
+		<property name="workerTasks" value="${tibco.cm.workertasks.2}" />		
+		<property name="schedulerWeight" value="${tibco.cm.schedulerweight.2}" />
+		<property name="schedulerHeartbeat" value="${tibco.cm.schedulerheartbeat.2}" />
+		<property name="schedulerActivation" value="${tibco.cm.scheduleractivation.2}" />
+		<property name="descript" value="${group}.${svr}.${seq}_TIbco_RV_DQ_LISTEN_WORK"/>
+   	</bean>
+   	
+   	<bean id="Listener2" class="kr.co.mesframe.esb.tibco.listener.TibcoMessageDQListener">
+		<property name="messageListener" ref="messageListenerAdapter"/>
+		<property name="cmQueueTransportFactoryService" ref="cmQueueTransportFactoryService2"/>
+		<property name="subject" value="${mode}.KR.${group}.MES.${svr}"/>
+   	</bean>
+
+<!-- 
+   	<bean id="cmQueueTransportFactoryService3" class="kr.co.mesframe.esb.tibco.transport.CmQueueTransportFactoryService">
+		<property name="rvdTransportFactoryService" ref="RvdTransportFactorySource" />
+		<property name="cmName" value="${mode}.${svr}.DQ"/>
+		<property name="workerWeight" value="${test.tibco.cm.workerweight.3}" />
+		<property name="workerTasks" value="${test.tibco.cm.workertasks.3}" />		
+		<property name="schedulerWeight" value="${test.tibco.cm.schedulerweight.3}" />
+		<property name="schedulerHeartbeat" value="${test.tibco.cm.schedulerheartbeat.3}" />
+		<property name="schedulerActivation" value="${test.tibco.cm.scheduleractivation.3}" />
+		<property name="descript" value="${svr}_TIbco_RV_DQ_WORKER2"/>
+   	</bean>   	
+   	
+ 	<bean id="Listener3" class="kr.co.mesframe.esb.tibco.listener.TibcoMessageDQListener">
+		<property name="messageListener" ref="messageListenerAdapter"/>
+		<property name="cmQueueTransportFactoryService" ref="cmQueueTransportFactoryService3"/>
+		<property name="subject" value="${mode}.${svr}"/>
+   	</bean>
+ -->
+
+   	<bean id="messageService" class="kr.co.mesframe.esb.bundle.TibcoMessageServiceImpl" >
+   		<property name="RvdTransportFactorySource" ref="RvdTransportFactorySource" />
+   		<property name="CmTransportFactoryService" ref="CmTransportFactoryService" />
+   	</bean>
+   	
+   	<bean id="messageFormat" class="kr.co.mesframe.esb.core.MessageFormatImpl" scope="prototype"/>
+   	
+</beans>

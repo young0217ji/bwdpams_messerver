@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" 
+	"http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="Console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+<!--			<param name="ConversionPattern" value="%d [%30t] [%-5p] %m%n" />-->
+			<param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss.SS}][%15t][%5p] : %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="RollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+<!--		<param name="File" value="${LogDir}/${svr}${seq}.log" />-->
+		<param name="File" value="${LogDir}/${svr}.log" />
+		<param name="Append" value="true" />
+<!--
+		<param name="BufferedIO" value="true" />
+		<param name="BufferSize" value="1000" />
+-->
+		<param name="DatePattern" value=".yyyyMMdd-HH" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d Id=${svr} thread=[%20.20t] [%5p] - [%c{2}.%M] %m%n"/>
+		</layout>
+	</appender>     
+
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="2000" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile" />
+	</appender>    
+
+	<logger name="org.springframework">
+		<level value="INFO" />
+	</logger>
+    
+	<logger name="kr.co.mesframe">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="kr.co.mesfactory">
+		<level value="DEBUG"/> 
+	</logger>
+
+	<logger name="jdbc.sqlonly">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="mes">
+		<level value="DEBUG" />
+	</logger>
+    
+	<root>
+		<level value="WARN" />
+		<appender-ref ref="ASYNC" />
+	</root>
+    
+<!-- 
+		FATAL : 가장 크리티컬한 에러가 일어 났을 때 사용합니다.
+		ERROR : 일반 에러가 일어 났을 때 사용합니다.
+		WARN : 에러는 아니지만 주의할 필요가 있을 때 사용합니다.
+		INFO : 어클리케이션이 작동할때 필요한 기본적인 정보를 나타낼 때 사용합니다.
+		DEBUG : 디버깅 즉, 문제 해결을 하기 위한 상태 정보를 상세히 나타낼 때 사용합니다.
+		FATAL > ERROR > WARN > INFO > DEBUG > TRACE
+
+	<appender name="Console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss.SS}][%15t][%5p] : %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="DailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${LogDir}/${process}.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="'.'yyyyMMdd-HH" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d Id=${svr} thread=[%20.20t] [%5p] - [%c{2}.%M] %m%n"/> 
+		</layout>                    
+	</appender>
+
+	<logger name="org.springframework">
+		<level value="WARN" />
+	</logger>
+
+	<root>
+		<level value ="INFO" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRollingFile" />
+	</root>
+-->
+</log4j:configuration>
+
