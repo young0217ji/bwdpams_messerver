@@ -73,7 +73,7 @@ public class QueryResult
 	public List<LinkedCaseInsensitiveMap> getQueryResult(String plantID, String queryID, String version, HashMap<String, Object> bindMap) {
 		Object[] args = new Object[] { plantID, queryID, version };
 
-    	String usrSql = "SELECT queryString FROM customQuery WHERE plantID = ? AND queryID = ? AND queryVersion = ? ";
+    	String usrSql = "SELECT QRY_STR FROM CUSTOMQRY WHERE FACTORY_ID = ? AND QRY_ID = ? AND QRY_VER = ? ";
 
     	List resultList = null;
     	resultList = SqlMesTemplate.queryForList(usrSql, args);

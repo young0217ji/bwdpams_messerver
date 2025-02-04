@@ -66,7 +66,7 @@ public class GetQueryResult implements ObjectExecuteService
 
     	Object[] args = new Object[] { plantID, queryID, version };
 
-    	String usrSql = "SELECT queryString FROM customQuery WHERE plantID = ? AND queryID = ? AND queryVersion = ? ";
+    	String usrSql = "SELECT QRY_STR FROM CUSTOMQRY WHERE FACTORY_ID = ? AND QRY_ID = ? AND QRY_VER = ? ";
 
     	List resultList = null;
     	resultList = SqlMesTemplate.queryForList(usrSql, args);
@@ -297,10 +297,10 @@ public class GetQueryResult implements ObjectExecuteService
     
     public void updateQueryCount(String plantID, String queryID, String queryVersion)
     {
-    	String updateSql = "UPDATE CUSTOMQUERY SET QUERYCOUNT = NVL(QUERYCOUNT,0) + 1 " + 
-                           "WHERE PLANTID='" + plantID + "' " +
-				           "AND QUERYID='" + queryID + "' " + 
-                           "AND QUERYVERSION='"+queryVersion+"' ";
+    	String updateSql = "UPDATE CUSTOMQRY SET QRY_CNT = NVL(QRY_CNT,0) + 1 " + 
+                           "WHERE FACTORY_ID='" + plantID + "' " +
+				           "AND QRY_ID='" + queryID + "' " + 
+                           "AND QRY_VER='"+queryVersion+"' ";
 		SqlMesTemplate.update(updateSql);
     }
     
